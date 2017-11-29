@@ -1,4 +1,4 @@
-# robotframework-reportportal
+# robotframework-reportportal-ng
 
 Short Description
 ---
