@@ -4,4 +4,4 @@ python:
   - "3.4"
   - "3.6"
 script:
-  - python setup.py -e install
+  - python setup.py -q install
