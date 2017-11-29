@@ -15,7 +15,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='robotframework-reportportal-ng',
-    version='1.0.0',
+    version='1.0.1',
     description='A Robot Framework Report Portal Listener',
     long_description=long_description,
     url='https://github.com/ailjushkin/robotframework-reportportal',
