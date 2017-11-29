@@ -15,10 +15,10 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='robotframework-reportportal-ng',
-    version='1.0.1',
+    version='1.0.0',
     description='A Robot Framework Report Portal Listener',
     long_description=long_description,
-    url='https://github.com/ailjushkin/robotframework-reportportal',
+    url='https://github.com/ailjushkin/robotframework-reportportal-ng',
     author='Alexander Iljushkin',
     author_email='ailjushkin@gmail.com',
     license='GPLv3',
