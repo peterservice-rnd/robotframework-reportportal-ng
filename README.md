@@ -1,5 +1,7 @@
 # robotframework-reportportal-ng
 
+[![Build Status](https://travis-ci.org/ailjushkin/robotframework-reportportal-ng.svg?branch=master)](https://travis-ci.org/ailjushkin/robotframework-reportportal-ng)
+
 Short Description
 ---
 
