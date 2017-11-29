@@ -5,9 +5,24 @@
 Short Description
 ---
 
-Robot Framework listener module for integration with Report Portal
+Robot Framework listener module for integration with Report Portal.
 
 Usage
+---
+This listener requires specified robot framework context variables to be set up.
+Some of them are required for execution and some are not.
+
+Parameters list:
+
+        RP_UUID - unique id of user in Report Portal profile..
+        RP_ENDPOINT - <protocol><hostname>:<port> for connection with Report Portal.
+                      Example: http://reportportal.local:8080/
+        RP_LAUNCH - name of launch to be used in Report Portal.
+        RP_PROJECT - project name for new launches.
+        RP_LAUNCH_DOC - documentation of new launch.
+        RP_LAUNCH_TAGS - additional tags to mark new launch.
+ 
+Example
 ---
 
 Example command to run test using pabot with report portal listener.
