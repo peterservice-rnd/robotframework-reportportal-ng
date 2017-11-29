@@ -18,7 +18,7 @@ setup(
     version='1.0.0',
     description='A Robot Framework Report Portal Listener',
     long_description=long_description,
-    url='https://github.com/pypa/robotframework-reportportal',
+    url='https://github.com/ailjushkin/robotframework-reportportal',
     author='Alexander Iljushkin',
     author_email='ailjushkin@gmail.com',
     license='GPLv3',
