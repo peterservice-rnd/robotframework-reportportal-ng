@@ -41,3 +41,8 @@ pybot --listener reportportal_listener --escape quot:Q \
 --variable RP_LAUNCH:"Demo Tests" \
 --variable RP_PROJECT:DEMO_USER_PERSONAL test_folder
 ```
+
+License
+---
+
+Apache License 2.0
