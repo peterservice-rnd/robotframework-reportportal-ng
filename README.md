@@ -7,6 +7,13 @@ Short Description
 
 Robot Framework listener module for integration with Report Portal.
 
+Installation
+---
+
+```
+pip install robotframework-reportportal-ng
+```
+
 Usage
 ---
 This listener requires specified robot framework context variables to be set up.
