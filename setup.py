@@ -21,7 +21,7 @@ setup(
     url='https://github.com/ailjushkin/robotframework-reportportal-ng',
     author='Alexander Iljushkin',
     author_email='ailjushkin@gmail.com',
-    license='GPLv3',
+    license='License :: OSI Approved :: Apache Software License',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
 
