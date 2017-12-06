@@ -15,13 +15,13 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='robotframework-reportportal-ng',
-    version='1.0.4.1',
+    version='1.0.4.3',
     description='A Robot Framework Report Portal Listener',
     long_description=long_description,
     url='https://github.com/ailjushkin/robotframework-reportportal-ng',
     author='Alexander Iljushkin',
     author_email='ailjushkin@gmail.com',
-    license='GPLv3',
+    license='License :: OSI Approved :: Apache Software License',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
 
@@ -34,7 +34,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.6',
     ],
-    python_requires='~=2.7, ~=3.4, ~=3.6',
+    python_requires='==2.7.*, ==3.6.*',
     keywords='testing,reporting,robot framework,reportportal',
     packages=find_packages(),
     install_requires=['reportportal-client>=3.0.0', 'robotframework>=3.0.2'],
