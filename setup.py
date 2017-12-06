@@ -34,7 +34,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.6',
     ],
-    python_requires='==2.7.*, ==3.6.*',
+    python_requires='>=2.7.*, <=3.6.*',
     keywords='testing,reporting,robot framework,reportportal',
     packages=find_packages(),
     install_requires=['reportportal-client>=3.0.0', 'robotframework>=3.0.2'],
