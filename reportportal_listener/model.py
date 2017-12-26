@@ -97,11 +97,17 @@ class Keyword(object):
         """Get keyword name.
 
         Returns:
-            Наименование, обрезанное до 256 символов.
+            Name, cropped up to 256 characters.
         """
-        assignment = u"{0} = ".format(", ".join(self.assign)) if self.assign else ""
-        arguments = u", ".join(self.args)
-        full_name = u"{0}{1} ({2})".format(assignment, self.name, arguments)
+        assign = ", ".join(self.assign).encode("utf8")
+        assignment = "{0} = ".format(assign) if self.assign else ""
+        arguments = ", ".join(self.args)
+        # full_name = "{0}{1} ({2})".format(assignment, self.name, arguments)
+        full_name = "{0}{1} ({2})".format(
+            assignment,
+            self.name.encode("utf8"),
+            arguments.encode("utf8")
+        )
         return full_name[:256]
 
     def get_type(self):
