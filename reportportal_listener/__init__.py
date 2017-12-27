@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import re
+import os
+
+from mimetypes import guess_type
 
 from robot.libraries.BuiltIn import BuiltIn
 
@@ -58,7 +62,20 @@ class reportportal_listener(object):  # noqa
         Args:
             message: current message passed from test by test executor.
         """
-        RobotService.log(message=message)
+        attachment = None
+        if (message['html'] == 'yes'):
+            screenshot = re.search('[a-z]+-[a-z]+-[0-9]+.png', message['message'])
+            if screenshot:
+                kwname = '{}'.format(screenshot.group(0))
+                kwname = os.path.join(BuiltIn().get_variable_value('${OUTPUT_DIR}'), kwname)
+                with open(kwname, "rb") as fh:
+                    attachment = {
+                                "name": os.path.basename(kwname),
+                                "data": fh.read(),
+                                "mime": guess_type(kwname)[0] or "application/octet-stream"
+                            }
+
+        RobotService.log(message, attachment)
 
     def _init_service(self):
         """Init report portal service."""
