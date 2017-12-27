@@ -102,7 +102,6 @@ class Keyword(object):
         assign = ", ".join(self.assign).encode("utf8")
         assignment = "{0} = ".format(assign) if self.assign else ""
         arguments = ", ".join(self.args)
-        # full_name = "{0}{1} ({2})".format(assignment, self.name, arguments)
         full_name = "{0}{1} ({2})".format(
             assignment,
             self.name.encode("utf8"),
