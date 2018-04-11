@@ -10,12 +10,12 @@ from setuptools import setup, find_packages
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
     name='robotframework-reportportal-ng',
-    version='1.0.4.6',
+    version='1.0.4.7',
     description='A Robot Framework Report Portal Listener',
     long_description=long_description,
     url='https://github.com/ailjushkin/robotframework-reportportal-ng',
@@ -28,7 +28,7 @@ setup(
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Testing',
 
-        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+        'License :: OSI Approved :: Apache Software License',
 
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.4',

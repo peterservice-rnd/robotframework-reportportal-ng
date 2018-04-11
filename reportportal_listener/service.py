@@ -5,7 +5,9 @@ import re
 from time import time
 
 from reportportal_client import ReportPortalService
+from robot.libraries.BuiltIn import BuiltIn
 from robot.utils import PY2
+from urllib3.exceptions import ResponseError
 
 from .variables import Variables
 
@@ -51,6 +53,7 @@ def timestamp():
 class RobotService(object):
     """Service class for work with Report Portal."""
     rp = None  # type: ReportPortalService
+    builtin = None  # type: BuiltIn()
 
     status_mapping = {
         "PASS": "PASSED",
@@ -65,6 +68,17 @@ class RobotService(object):
         "DEBUG": "DEBUG",
         "WARN": "WARN"
     }
+
+    @staticmethod
+    def builtin_lib():
+        """Return the BuiltIn library instance.
+
+        Returns:
+            BuiltIn: instance of the BuiltIn library.
+        """
+        if not RobotService.builtin:
+            RobotService.builtin = BuiltIn()
+        return RobotService.builtin
 
     @staticmethod
     def init_service(endpoint, project, uuid):
@@ -235,4 +249,8 @@ class RobotService(object):
             "level": RobotService.log_level_mapping[message["level"]],
             "attachment": attachment,
         }
-        RobotService.rp.log(**sl_rq)
+        try:
+            RobotService.rp.log(**sl_rq)
+        except ResponseError as e:
+            RobotService.builtin_lib().log_to_console(message="RobotService.rp.log failed with ResponseError. "
+                                                              "See logs of a certain test.\n{}".format(str(e)))
