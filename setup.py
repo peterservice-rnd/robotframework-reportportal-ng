@@ -15,7 +15,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='robotframework-reportportal-ng',
-    version='1.0.4.7',
+    version='2.0.0',
     description='A Robot Framework Report Portal Listener',
     long_description=long_description,
     url='https://github.com/ailjushkin/robotframework-reportportal-ng',
@@ -30,8 +30,6 @@ setup(
 
         'License :: OSI Approved :: Apache Software License',
 
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.6',
     ],
     keywords='testing,reporting,robot framework,reportportal',
