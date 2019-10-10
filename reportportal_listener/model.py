@@ -1,123 +1,177 @@
 # -*- coding: utf-8 -*-
 
-class Suite(object):
-    """Suite object in Report Portal."""
+from typing import Any, Dict, List, Optional, Union
 
-    def __init__(self, attributes):
-        """Init suite.
+
+class Suite(object):
+    """Object describes suite."""
+
+    def __init__(self, attributes: Dict[str, Any]) -> None:
+        """Suite initialization.
 
         Args:
-            attributes: attr dictionary from robot framework listener.
+            attributes: suite attributes from Robot Framework.
         """
         super(Suite, self).__init__()
-        self.suites = attributes["suites"]
-        self.tests = attributes["tests"]
-        self.doc = attributes["doc"]
-        self.source = attributes["source"]
-        self.total_tests = attributes["totaltests"]
-        self.longname = attributes["longname"]
-        self.robot_id = attributes["id"]
-        self.metadata = attributes["metadata"]
-        self.status = None
-        self.message = None
-        self.statistics = None
-        if "status" in attributes.keys():
-            self.status = attributes["status"]
-        if "message" in attributes.keys():
-            self.message = attributes["message"]
-        if "statistics" in attributes.keys():
-            self.statistics = attributes["statistics"]
+        self.suites: List[str] = attributes["suites"]
+        self.doc: str = attributes["doc"]
+        self.source: str = attributes["source"]
+        self.total_tests: int = attributes["totaltests"]
+        self.longname: str = attributes["longname"]
+        self.robot_id: str = attributes["id"]
+        self.metadata: Dict[str, str] = attributes["metadata"]
+        self.start_time: str = attributes["starttime"]
+        self.end_time: str = attributes.get("endtime", "")
+        self.status: str = attributes.get("status", "")
+        self.message: Dict[str, Any] = {}
+        self.statistics: str = attributes.get("statistics", "")
+        self.rp_item_type: str = "TEST" if attributes.get("tests") else "SUITE"
+        self.tests: List[Test] = []
+        self.type: str = "SUITE"
+        self.setup: Optional[Keyword] = None
+        self.teardown: Optional[Keyword] = None
 
-    def get_type(self):
-        """Identify suite type.
+    def update(self, attributes: Dict[str, Any]) -> None:
+        """Update suite STATUS, MESSAGE, STATISTICS and ENDTIME.
 
-        Tests inside - suite is test type in RP.
-        No tests inside - suite has suite type in RP.
-
-        Returns:
-            str: TEST or SUITE depending object state.
+        Args:
+            attributes (dict): suite attributes.
         """
-        if self.tests:
-            return "TEST"
-        else:
-            return "SUITE"
+        self.end_time = attributes.get("endtime", "")
+        self.status = attributes.get("status", "")
+        self.statistics = attributes.get("statistics", "")
 
 
 class Test(object):
-    """Test object in Report Portal."""
+    """Object describes test."""
 
-    def __init__(self, name=None, attributes=None):
-        """Init test.
+    def __init__(self, name: str, attributes: Dict[str, Any]) -> None:
+        """Test initialization.
 
         Args:
             name: test name.
-            attributes: attr dictionary from robot framework listener.
+            attributes: test attributes from Robot Framework.
         """
         super(Test, self).__init__()
-        self.name = name
-        self.critical = attributes["critical"]
-        self.template = attributes["template"]
-        self.tags = attributes["tags"]
-        self.doc = attributes["doc"]
-        self.longname = attributes["longname"]
-        self.robot_id = attributes["id"]
-        self.status = None
-        self.message = None
-        if "status" in attributes.keys():
-            self.status = attributes["status"]
-        if "message" in attributes.keys():
-            self.message = attributes["message"]
+        self.name: str = name
+        self.critical: str = attributes["critical"]
+        self.template: str = attributes["template"]
+        self.tags: List[str] = attributes["tags"]
+        self.doc: str = attributes["doc"]
+        self.longname: str = attributes["longname"]
+        self.robot_id: str = attributes["id"]
+        self.start_time: str = attributes["starttime"]
+        self.status: str = attributes.get("status", "")
+        self.message: Dict[str, Any] = {}
+        self.end_time: str = attributes.get("endtime", "")
+        self.rp_item_type: str = "STEP"
+        self.type: str = "TEST"
+        self.setup: Optional[Keyword] = None
+        self.teardown: Optional[Keyword] = None
+        self.steps: List[Keyword] = []
+
+    def update(self, attributes: Dict[str, Any]) -> None:
+        """Update test STATUS, MESSAGE and ENDTIME.
+
+        Args:
+            attributes (dict): test attributes.
+        """
+        self.status = attributes.get("status", "")
+        self.tags = attributes.get("tags", [])
+        self.end_time = attributes.get("endtime", "")
 
 
 class Keyword(object):
-    """Keyword object in Report Portal."""
+    """Object describes keyword."""
 
-    def __init__(self, name=None, parent_type=None, attributes=None):
-        """Init keyword.
+    def __init__(self, name: str, attributes: Dict[str, Any], parent: Union[Suite, Test, "Keyword"]) -> None:
+        """Keyword initialization.
 
         Args:
-            name: keyword name.
-            parent_type: link for parent object in the suite hierarchy.
-            attributes: attr dictionary from robot framework listener.
+            name: keyword name with library name.
+            attributes: keyword attributes from Robot Framework.
+            parent: parent object, may be Keyword, Test or Suite.
         """
         super(Keyword, self).__init__()
         self.name = name
-        self.libname = attributes["libname"]
-        self.keyword_name = attributes["kwname"]
-        self.doc = attributes["doc"]
-        self.tags = attributes["tags"]
-        self.args = attributes["args"]
-        self.assign = attributes["assign"]
-        self.keyword_type = attributes["type"]
-        self.parent_type = parent_type
-        if "status" in attributes.keys():
-            self.status = attributes["status"]
+        self.libname: str = attributes["libname"]
+        self.keyword_name: str = attributes["kwname"]
+        self.doc: str = attributes["doc"]
+        self.tags: List[str] = attributes["tags"]
+        self.args: List[str] = attributes["args"]
+        self.assign: List[str] = attributes["assign"]
+        self.start_time: str = attributes["starttime"]
+        self.end_time: str = attributes.get("endtime", "")
+        self.status: str = attributes.get("status", "")
+        self.parent = parent
+        self.messages: List[Dict[str, Any]] = []
+        self.steps: List[Keyword] = []
+        self.type: str = attributes["type"]
 
-    def get_name(self):
+        self._rp_item_type: Optional[str] = None
+
+    @property
+    def rp_item_type(self) -> str:
+        """Get Report Portal item type.
+
+        Returns:
+            Item type.
+        """
+        if self._rp_item_type is None:
+            if self.type == "Setup":
+                self._rp_item_type = f"BEFORE_{self.parent.type}"
+            elif self.type == "Teardown":
+                self._rp_item_type = f"AFTER_{self.parent.type}"
+            else:
+                self._rp_item_type = "STEP"
+        return self._rp_item_type
+
+    @property
+    def is_wuks(self) -> bool:
+        """Define if current keyword is WUKS.
+
+        Returns:
+            True if this keyword is Wait Until Keyword Succeeds, else - False.
+        """
+        return self.name in [u"BuiltIn.Wait Until Keyword Succeeds"]
+
+    @property
+    def is_top_level(self) -> bool:
+        """Check keyword at top level or not.
+
+        Returns:
+            Boolean.
+        """
+        if isinstance(self.parent, Keyword):
+            return self.parent.rp_item_type != "STEP" and self.rp_item_type == "STEP"
+        else:
+            return self.rp_item_type == "STEP"
+
+    @property
+    def is_setup_or_teardown(self) -> bool:
+        """Check keyword is at Setup/Teardown or not.
+
+        Returns:
+            Boolean.
+        """
+        return self.rp_item_type != "STEP"
+
+    def get_name(self) -> str:
         """Get keyword name.
 
         Returns:
-            Name, cropped up to 256 characters.
+            Name is cropped up to 256 characters.
         """
-        assign = ", ".join(self.assign).encode("utf8")
-        assignment = "{0} = ".format(assign) if self.assign else ""
+        assignment = f"{', '.join(self.assign)} = " if self.assign else ""
         arguments = ", ".join(self.args)
-        full_name = "{0}{1} ({2})".format(
-            assignment,
-            self.name.encode("utf8"),
-            arguments.encode("utf8")
-        )
+        full_name = f"{assignment}{self.name} ({arguments})"
         return full_name[:256]
 
-    def get_type(self):
-        """Get kw type.
+    def update(self, attributes: Dict[str, Any]) -> None:
+        """Update keyword STATUS and ENDTIME.
 
-        Returns:
-            ke type, based on robot framework data.
+        Args:
+            attributes (dict): keyword attributes.
         """
-        if self.keyword_type == "Setup":
-            return u"BEFORE_{0}".format(self.parent_type)
-        elif self.keyword_type == "Teardown":
-            return u"AFTER_{0}".format(self.parent_type)
-        else:
-            return u"STEP"
+        self.status = attributes.get("status", "")
+        self.end_time = attributes.get("endtime", "")
