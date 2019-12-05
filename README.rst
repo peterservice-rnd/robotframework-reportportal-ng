@@ -51,5 +51,5 @@ License
 
 Apache License 2.0
 
-.. |Build Status| image:: https://travis-ci.org/ailjushkin/robotframework-reportportal-ng.svg?branch=master
-   :target: https://travis-ci.org/ailjushkin/robotframework-reportportal-ng
+.. |Build Status| image:: https://travis-ci.org/peterservice-rnd/robotframework-reportportal-ng.svg?branch=master
+   :target: https://travis-ci.org/peterservice-rnd/robotframework-reportportal-ng
